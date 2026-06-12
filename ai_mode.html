@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Workspace Modern</title>
+    <style>
+        :root {
+            --text-dark: #202124;
+            --text-muted: #5f6368;
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-card: rgba(240, 248, 255, 0.65);
+            --glass-border: rgba(255, 255, 255, 0.4);
+            --font-main: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: var(--font-main);
+            /* Latar belakang bunga dan langit biru mirip desain */
+            background-image: url('Background.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text-dark);
+            padding-top: 12vh;
+            box-sizing: border-box;
+        }
+
+        /* Teks Judul Utama */
+        .header-text {
+            text-align: center;
+            color: white;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        .header-text h1 {
+            font-size: 2.2em;
+            font-weight: 500;
+            margin: 0 0 5px 0;
+            letter-spacing: 0.5px;
+        }
+
+        .header-text h2 {
+            font-size: 2.2em;
+            font-weight: 600;
+            margin: 0;
+            letter-spacing: 0.5px;
+        }
+
+        /* Kotak Input Utama */
+        .search-container {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            width: 90%;
+            max-width: 750px;
+            border-radius: 24px;
+            padding: 15px 20px 10px 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            border: 1px solid var(--glass-border);
+            display: flex;
+            flex-direction: column;
+            animation: fadeInUp 0.8s ease-out;
+            transition: all 0.3s ease;
+        }
+
+        .search-container:focus-within {
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .input-top {
+            display: flex;
+            align-items: center;
+        }
+
+        input[type="text"] {
+            flex-grow: 1;
+            border: none;
+            background: transparent;
+            font-size: 1.15em;
+            color: var(--text-dark);
+            padding: 10px 0 20px 0;
+            outline: none;
+            font-family: inherit;
+        }
+
+        input[type="text"]::placeholder {
+            color: #757575;
+        }
+
+        .input-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid rgba(0,0,0,0.06);
+            padding-top: 10px;
+        }
+
+        .left-actions, .right-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-icon {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5px;
+            border-radius: 50%;
+            transition: background 0.2s;
+        }
+
+        .btn-icon:hover {
+            background: rgba(0,0,0,0.05);
+            color: var(--text-dark);
+        }
+
+        .btn-icon svg { width: 20px; height: 20px; fill: currentColor; }
+
+        .btn-badge {
+            background: white;
+            border: 1px solid #e0e0e0;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            color: var(--text-dark);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .btn-submit {
+            background-color: #3b82f6;
+            color: white;
+            border: none;
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+        .btn-submit:hover { background-color: #2563eb; }
+        .btn-submit svg { fill: white; width: 16px; height: 16px; }
+
+        /* Pil Sugesti di Bawah Input */
+        .pills-container {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .pill {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            color: var(--text-dark);
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            transition: all 0.2s;
+        }
+
+        .pill:hover {
+            background: white;
+            transform: translateY(-2px);
+        }
+
+        /* Area 3 Kartu Bawah */
+        .cards-container {
+            display: flex;
+            gap: 20px;
+            margin-top: 40px;
+            width: 95%;
+            max-width: 1000px;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1.2s ease-out;
+        }
+
+        .card {
+            background: var(--glass-card);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 20px;
+            width: 300px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Efek Cahaya Oranye/Kuning di Sudut Kartu */
+        .card::after {
+            content: '';
+            position: absolute;
+            bottom: -30px;
+            right: -30px;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, rgba(255, 214, 102, 0.8) 0%, rgba(255, 179, 71, 0) 70%);
+            filter: blur(25px);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85em;
+            color: #444;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-header svg { width: 14px; height: 14px; fill: currentColor; }
+
+        .list-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+            cursor: pointer;
+        }
+        
+        .list-item:hover .item-title { color: #000; }
+
+        .item-icon {
+            width: 32px;
+            height: 32px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            font-size: 1.2em;
+        }
+
+        .item-details { flex-grow: 1; }
+        
+        .item-title {
+            font-size: 0.95em;
+            font-weight: 500;
+            margin: 0 0 2px 0;
+            color: var(--text-dark);
+            transition: color 0.2s;
+        }
+
+        .item-time {
+            font-size: 0.75em;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        .item-more {
+            color: var(--text-muted);
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Grid Aplikasi (Kartu Tengah) */
+        .app-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            position: relative;
+            z-index: 1;
+            margin-top: 10px;
+        }
+
+        .app-icon {
+            background: white;
+            width: 45px; height: 45px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+            margin: 0 auto;
+            font-size: 1.5em;
+        }
+
+        /* Area Hasil AI */
+        #response-container {
+            display: none;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            width: 90%;
+            max-width: 750px;
+            margin-top: 25px;
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--glass-border);
+            line-height: 1.7;
+            font-size: 1.05em;
+            animation: fadeInUp 0.5s ease-out;
+            margin-bottom: 50px;
+        }
+
+        .loading-text {
+            display: none;
+            margin-top: 20px;
+            color: white;
+            font-weight: 500;
+            text-shadow: 0 1px 5px rgba(0,0,0,0.3);
+            font-size: 1.1em;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+
+    </style>
+</head>
+<body>
+
+    <div class="header-text" id="headerText">
+        <h1>Selamat siang.</h1>
+        <h2>Ada ide konten apa hari ini?</h2>
+    </div>
+
+    <!-- Kotak Input Menyerupai Copilot -->
+    <div class="search-container">
+        <div class="input-top">
+            <input type="text" id="userInput" placeholder="Tanya asisten untuk draft video, naskah, atau ide promosi..." autocomplete="off" onkeypress="handleKeyPress(event)">
+        </div>
+        <div class="input-bottom">
+            <div class="left-actions">
+                <button class="btn-icon" title="Tambah Lampiran"><svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg></button>
+                <div class="btn-badge">
+                    Tindakan Cepat
+                    <svg width="12" height="12" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+                </div>
+            </div>
+            <div class="right-actions">
+                <button class="btn-icon" title="Mode Suara"><svg viewBox="0 0 24 24"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5-3c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg></button>
+                <button class="btn-submit" onclick="askAI()" title="Kirim Pesan">
+                    <svg viewBox="0 0 24 24"><path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"/></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tombol Sugesti (Pills) -->
+    <div class="pills-container" id="pillsBox">
+        <div class="pill" onclick="fillInput('Buatkan draf naskah video 60 detik untuk prodi Teknik Mesin dan Sistem Informasi.')">📝 Naskah Video 60 Detik</div>
+        <div class="pill" onclick="fillInput('Berikan ide kreatif video rekrutmen mahasiswa dengan maskot Bimo beralmamater kuning.')">💡 Ide Promosi Bimo</div>
+        <div class="pill" onclick="fillInput('Buat caption menarik untuk pendaftaran PMB Gelombang 3, 4, dan 5 tahun 2026.')">📅 Caption Gelombang PMB</div>
+        <div class="pill" onclick="fillInput('Periksa sentimen emosi dari teks ini agar lebih menarik untuk calon maba.')">🔍 Cek Emosi Teks</div>
+    </div>
+
+    <!-- Loading Text -->
+    <div class="loading-text" id="loadingText">Asisten sedang memproses...</div>
+
+    <!-- Kotak Hasil Respon AI (Awalnya Sembunyi) -->
+    <div id="response-container"></div>
+
+    <!-- Area 3 Kartu (Menyesuaikan dengan Konteks Pekerjaan Anda) -->
+    <div class="cards-container" id="uiCards">
+        
+        <!-- Kartu 1 -->
+        <div class="card">
+            <div class="card-header">
+                <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2h12c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                Akses cepat file Anda
+            </div>
+            <div class="list-item" onclick="fillInput('Lanjutkan penulisan draft naskah prodi Teknik Mesin')">
+                <div class="item-icon">📄</div>
+                <div class="item-details">
+                    <p class="item-title">Draft Naskah T. Mesin</p>
+                    <p class="item-time">7 menit yang lalu</p>
+                </div>
+                <div class="item-more">•••</div>
+            </div>
+            <div class="list-item" onclick="fillInput('Tinjau ulang caption Sistem Informasi')">
+                <div class="item-icon" style="color: #107c41;">📊</div>
+                <div class="item-details">
+                    <p class="item-title">Caption Sistem Informasi</p>
+                    <p class="item-time">28 menit yang lalu</p>
+                </div>
+                <div class="item-more">•••</div>
+            </div>
+            <div class="list-item">
+                <div class="item-icon">🖼️</div>
+                <div class="item-details">
+                    <p class="item-title">Bimo_Almamater.png</p>
+                    <p class="item-time">3 jam yang lalu</p>
+                </div>
+                <div class="item-more">•••</div>
+            </div>
+        </div>
+
+        <!-- Kartu 2 -->
+        <div class="card">
+            <div class="card-header">
+                <svg viewBox="0 0 24 24"><path d="M4 8h4V4H4v4zm6 12h4v-4h-4v4zm-6 0h4v-4H4v4zm0-6h4v-4H4v4zm6 0h4v-4h-4v4zm6-10v4h4V4h-4zm-6 4h4V4h-4v4zm6 6h4v-4h-4v4zm0 6h4v-4h-4v4z"/></svg>
+                Fokus Gelombang PMB 2026
+            </div>
+            <div class="app-grid">
+                <div class="app-icon" title="Gelombang 3" style="color: #185abd;">🌸</div>
+                <div class="app-icon" title="Gelombang 4" style="color: #107c41;">☀️</div>
+                <div class="app-icon" title="Gelombang 5" style="color: #d83b01;">🍂</div>
+                <div class="app-icon" title="Video" style="color: #c43e1c;">🎥</div>
+                <div class="app-icon" title="Sosmed" style="color: #8661c5;">📱</div>
+                <div class="app-icon" title="Cloud" style="color: #0078d4;">☁️</div>
+            </div>
+        </div>
+
+        <!-- Kartu 3 -->
+        <div class="card">
+            <div class="card-header">
+                <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/></svg>
+                Lanjutkan obrolan
+            </div>
+            <div class="list-item" onclick="fillInput('Coba persingkat naskah yang tadi agar tepat 60 detik.')">
+                <div class="item-icon" style="font-size: 1em;">💬</div>
+                <div class="item-details">
+                    <p class="item-title">Durasi naskah pas 1 menit</p>
+                    <p class="item-time">56 menit yang lalu</p>
+                </div>
+                <div class="item-more">•••</div>
+            </div>
+            <div class="list-item" onclick="fillInput('Bagaimana strategi konten untuk Gelombang 4 dan 5?')">
+                <div class="item-icon" style="font-size: 1em;">💬</div>
+                <div class="item-details">
+                    <p class="item-title">Strategi Gelombang 4 & 5</p>
+                    <p class="item-time">2 jam yang lalu</p>
+                </div>
+                <div class="item-more">•••</div>
+            </div>
+            <div class="list-item">
+                <div class="item-icon" style="font-size: 1em;">💬</div>
+                <div class="item-details">
+                    <p class="item-title">Karakter visual Bimo</p>
+                    <p class="item-time">Kemarin</p>
+                </div>
+                <div class="item-more">•••</div>
+            </div>
+        </div>
+
+    </div>
+
+<script>
+    // API Key OpenRouter Anda
+    const API_KEY = ""; 
+
+    const inputField = document.getElementById("userInput");
+    const responseContainer = document.getElementById("response-container");
+    const loadingText = document.getElementById("loadingText");
+    const pillsBox = document.getElementById("pillsBox");
+    const uiCards = document.getElementById("uiCards");
+    const headerText = document.getElementById("headerText");
+
+    function fillInput(text) {
+        inputField.value = text;
+        inputField.focus();
+    }
+
+    function handleKeyPress(event) {
+        if (event.key === "Enter") {
+            askAI();
+        }
+    }
+
+    async function askAI() {
+        const userText = inputField.value.trim();
+        
+        if (!userText) return;
+
+        // Saat pesan dikirim: sembunyikan UI awal, tampilkan loading
+        pillsBox.style.display = "none";
+        uiCards.style.display = "none";
+        headerText.style.display = "none";
+        responseContainer.style.display = "none";
+        loadingText.style.display = "block";
+        inputField.disabled = true;
+
+        try {
+            // Memanggil API OpenRouter dengan model Auto
+            const response = await fetch("", {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${API_KEY}`,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    "model": "openrouter/auto", 
+                    "messages": [
+                        { "role": "user", "content": userText }
+                    ]
+                })
+            });
+
+            const data = await response.json();
+            
+            if (data.error) { throw new Error(data.error.message); }
+            
+            let reply = data.choices[0].message.content;
+            
+            // Format HTML dasar untuk hasil dari AI
+            reply = reply.replace(/\n/g, "<br>");
+            reply = reply.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+
+            // Tampilkan jawaban
+            responseContainer.innerHTML = reply;
+            responseContainer.style.display = "block";
+
+        } catch (error) {
+            responseContainer.innerHTML = `<span style='color:#d32f2f;'><strong>Terjadi Kesalahan:</strong><br>${error.message}<br><br><em>Cek kembali kuota akun OpenRouter Anda atau gunakan model gratis "meta-llama/llama-3-8b-instruct:free".</em></span>`;
+            responseContainer.style.display = "block";
+            console.error(error);
+        } finally {
+            loadingText.style.display = "none";
+            inputField.disabled = false;
+            inputField.value = ""; // Mengosongkan input setelah dijawab
+            inputField.focus();
+        }
+    }
+</script>
+
+</body>
+</html>
